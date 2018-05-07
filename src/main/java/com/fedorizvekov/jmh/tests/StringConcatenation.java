@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.StringJoiner;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import com.fedorizvekov.jmh.tests.util.StringRepeater;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
@@ -77,7 +78,7 @@ public class StringConcatenation {
 
     @Benchmark
     public String stringFormat(Data data) {
-        String result = String.format("%s%s%s", data.stringArray);
+        String result = String.format(data.formatArg, data.stringArray);
         return result;
     }
 
@@ -106,10 +107,13 @@ public class StringConcatenation {
     public static class Data {
 
         String[] stringArray;
+        String formatArg;
 
         @Setup
         public void setup() {
             stringArray = new String[]{"test123", "test456", "test789"};
+
+            formatArg = StringRepeater.repeat("%s", stringArray.length);
         }
 
     }
