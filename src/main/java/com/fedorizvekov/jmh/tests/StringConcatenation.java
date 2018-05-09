@@ -4,12 +4,15 @@ import java.util.Arrays;
 import java.util.StringJoiner;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import com.fedorizvekov.jmh.tests.util.StringGenerator;
 import com.fedorizvekov.jmh.tests.util.StringRepeater;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
@@ -106,14 +109,21 @@ public class StringConcatenation {
     @State(Scope.Thread)
     public static class Data {
 
+        @Param({"15"})
+        int stringLength;
+        @Param({"10", "50", "100"})
+        int stringCount;
+
         String[] stringArray;
         String formatArg;
 
         @Setup
         public void setup() {
-            stringArray = new String[]{"test123", "test456", "test789"};
+            stringArray = Stream.generate(() -> StringGenerator.generate(stringLength))
+                    .limit(stringCount)
+                    .toArray(String[]::new);
 
-            formatArg = StringRepeater.repeat("%s", stringArray.length);
+            formatArg = StringRepeater.repeat("%s", stringCount);
         }
 
     }
