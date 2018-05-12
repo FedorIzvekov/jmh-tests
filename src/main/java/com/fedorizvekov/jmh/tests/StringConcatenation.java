@@ -1,6 +1,7 @@
 package com.fedorizvekov.jmh.tests;
 
 import java.util.concurrent.TimeUnit;
+import com.fedorizvekov.jmh.tests.util.StringGenerator;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
@@ -18,6 +19,7 @@ public class StringConcatenation {
     @Benchmark
     public String stringBuilder(Data data) {
         StringBuilder stringBuilder = data.stringBuilder;
+        stringBuilder.append(data.firstString);
         stringBuilder.append(data.secondString);
         stringBuilder.append(data.thirdString);
         return stringBuilder.toString();
@@ -28,6 +30,7 @@ public class StringConcatenation {
     public String stringBuilderLoop(Data data) {
         StringBuilder stringBuilder = data.stringBuilder;
         for (long count = 0; count < data.loopSize; count++) {
+            stringBuilder.append(data.firstString);
             stringBuilder.append(data.secondString);
             stringBuilder.append(data.thirdString);
         }
@@ -38,6 +41,7 @@ public class StringConcatenation {
     @Benchmark
     public String stringBuffer(Data data) {
         StringBuffer stringBuffer = data.stringBuffer;
+        stringBuffer.append(data.firstString);
         stringBuffer.append(data.secondString);
         stringBuffer.append(data.thirdString);
         return stringBuffer.toString();
@@ -48,6 +52,7 @@ public class StringConcatenation {
     public String stringBufferLoop(Data data) {
         StringBuffer stringBuffer = data.stringBuffer;
         for (long count = 0; count < data.loopSize; count++) {
+            stringBuffer.append(data.firstString);
             stringBuffer.append(data.secondString);
             stringBuffer.append(data.thirdString);
         }
@@ -91,6 +96,7 @@ public class StringConcatenation {
     public static class Data {
 
         long loopSize = 1;
+        int stringLength = 10;
 
         StringBuilder stringBuilder;
         StringBuffer stringBuffer;
@@ -100,11 +106,12 @@ public class StringConcatenation {
 
         @Setup
         public void setup() {
-            firstString = "test123";
-            secondString = "test456";
-            thirdString = "test789";
-            stringBuilder = new StringBuilder(firstString);
-            stringBuffer = new StringBuffer(firstString);
+            firstString = StringGenerator.generate(stringLength);
+            secondString = StringGenerator.generate(stringLength);
+            thirdString = StringGenerator.generate(stringLength);
+
+            stringBuilder = new StringBuilder();
+            stringBuffer = new StringBuffer();
         }
     }
 
