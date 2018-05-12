@@ -7,9 +7,11 @@ import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.infra.Blackhole;
 
 @BenchmarkMode(Mode.AverageTime)
 @Fork(jvmArgsAppend = {"-Xms2G", "-Xmx2G"})
@@ -17,78 +19,74 @@ import org.openjdk.jmh.annotations.State;
 public class StringConcatenation {
 
     @Benchmark
-    public String stringBuilder(Data data) {
+    public void stringBuilder(Data data, Blackhole blackhole) {
         StringBuilder stringBuilder = data.stringBuilder;
         stringBuilder.append(data.firstString);
         stringBuilder.append(data.secondString);
         stringBuilder.append(data.thirdString);
-        return stringBuilder.toString();
+        blackhole.consume(stringBuilder.toString());
     }
 
 
     @Benchmark
-    public String stringBuilderLoop(Data data) {
+    public void stringBuilderLoop(Data data, Blackhole blackhole) {
         StringBuilder stringBuilder = data.stringBuilder;
         for (long count = 0; count < data.loopSize; count++) {
             stringBuilder.append(data.firstString);
             stringBuilder.append(data.secondString);
             stringBuilder.append(data.thirdString);
         }
-        return stringBuilder.toString();
+        blackhole.consume(stringBuilder.toString());
     }
 
 
     @Benchmark
-    public String stringBuffer(Data data) {
+    public void stringBuffer(Data data, Blackhole blackhole) {
         StringBuffer stringBuffer = data.stringBuffer;
         stringBuffer.append(data.firstString);
         stringBuffer.append(data.secondString);
         stringBuffer.append(data.thirdString);
-        return stringBuffer.toString();
+        blackhole.consume(stringBuffer.toString());
     }
 
 
     @Benchmark
-    public String stringBufferLoop(Data data) {
+    public void stringBufferLoop(Data data, Blackhole blackhole) {
         StringBuffer stringBuffer = data.stringBuffer;
         for (long count = 0; count < data.loopSize; count++) {
             stringBuffer.append(data.firstString);
             stringBuffer.append(data.secondString);
             stringBuffer.append(data.thirdString);
         }
-        return stringBuffer.toString();
+        blackhole.consume(stringBuffer.toString());
     }
 
 
     @Benchmark
-    public String stringPlus(Data data) {
-        return data.firstString + data.secondString + data.thirdString;
+    public void stringPlus(Data data, Blackhole blackhole) {
+        blackhole.consume(data.firstString + data.secondString + data.thirdString);
     }
 
 
     @Benchmark
-    public String stringPlusLoop(Data data) {
-        String string = null;
+    public void stringPlusLoop(Data data, Blackhole blackhole) {
         for (long count = 0; count < data.loopSize; count++) {
-            string = data.firstString + data.secondString + data.thirdString;
+            blackhole.consume(data.firstString + data.secondString + data.thirdString);
         }
-        return string;
     }
 
 
     @Benchmark
-    public String stringConcat(Data data) {
-        return data.firstString.concat(data.secondString).concat(data.thirdString);
+    public void stringConcat(Data data, Blackhole blackhole) {
+        blackhole.consume(data.firstString.concat(data.secondString).concat(data.thirdString));
     }
 
 
     @Benchmark
-    public String stringConcatLoop(Data data) {
-        String string = null;
+    public void stringConcatLoop(Data data, Blackhole blackhole) {
         for (long count = 0; count < data.loopSize; count++) {
-            string = data.firstString.concat(data.secondString).concat(data.thirdString);
+            blackhole.consume(data.firstString.concat(data.secondString).concat(data.thirdString));
         }
-        return string;
     }
 
 
@@ -96,7 +94,8 @@ public class StringConcatenation {
     public static class Data {
 
         long loopSize = 1;
-        int stringLength = 10;
+        @Param({"25"})
+        int stringLength;
 
         StringBuilder stringBuilder;
         StringBuffer stringBuffer;
