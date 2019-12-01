@@ -20,5 +20,8 @@ java -jar ./target/jmh-tests-1.0.0-SNAPSHOT.jar
 
 ## Results
 
+### 1. String concatenation tests:
+
 #### [CPU Intel i7-10510U 1.80GHz](results/StringConcatenation.md#cpu-intel-i7-10510u-180ghz)
+* [Liberica JDK 11.0.5](results/StringConcatenation.md#liberica-jdk-1105)
 * [Liberica JDK 1.8.0_232](results/StringConcatenation.md#liberica-jdk-180232)
