@@ -12,6 +12,7 @@ public class BenchmarkRunner {
 
         Options options = new OptionsBuilder()
                 .include(StringConcatenation.class.getSimpleName())
+                .include(Logging.class.getSimpleName())
                 .warmupIterations(10)
                 .warmupTime(TimeValue.seconds(1))
                 .measurementIterations(10)
