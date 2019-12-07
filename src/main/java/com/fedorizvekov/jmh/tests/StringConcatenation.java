@@ -6,7 +6,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import com.fedorizvekov.jmh.tests.util.StringGenerator;
-import com.fedorizvekov.jmh.tests.util.StringRepeater;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
@@ -124,7 +123,7 @@ public class StringConcatenation {
                     .limit(stringCount)
                     .toArray(String[]::new);
 
-            formatArg = StringRepeater.repeat("%s", stringCount);
+            formatArg = "%s".repeat(stringCount);
         }
 
     }
