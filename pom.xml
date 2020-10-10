@@ -15,10 +15,11 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <mainClass>com.fedorizvekov.jmh.tests.StringConcatenation</mainClass>
 
-        <jmh.version>1.21</jmh.version>
-        <junit.version>4.12</junit.version>
-        <assertj-core.version>3.9.1</assertj-core.version>
-        <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+        <jmh.version>1.26</jmh.version>
+        <junit.jupiter.version>5.7.0</junit.jupiter.version>
+        <mockito.jupiter.version>3.5.13</mockito.jupiter.version>
+        <assertj-core.version>3.17.2</assertj-core.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
     </properties>
 
     <dependencies>
@@ -34,9 +35,21 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>${mockito.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-inline</artifactId>
+            <version>${mockito.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
