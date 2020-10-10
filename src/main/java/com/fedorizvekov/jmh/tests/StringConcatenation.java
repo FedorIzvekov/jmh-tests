@@ -1,7 +1,10 @@
 package com.fedorizvekov.jmh.tests;
 
+import java.util.StringJoiner;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 import com.fedorizvekov.jmh.tests.util.StringGenerator;
+import com.fedorizvekov.jmh.tests.util.StringRepeater;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
@@ -18,23 +21,18 @@ import org.openjdk.jmh.infra.Blackhole;
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 public class StringConcatenation {
 
+
     @Benchmark
-    public void stringBuilder(Data data, Blackhole blackhole) {
-        StringBuilder stringBuilder = data.stringBuilder;
-        stringBuilder.append(data.firstString);
-        stringBuilder.append(data.secondString);
-        stringBuilder.append(data.thirdString);
-        blackhole.consume(stringBuilder.toString());
+    public void stringFormat(Data data, Blackhole blackhole) {
+        blackhole.consume(String.format(data.formatArg, data.stringArray));
     }
 
 
     @Benchmark
-    public void stringBuilderLoop(Data data, Blackhole blackhole) {
+    public void stringBuilder(Data data, Blackhole blackhole) {
         StringBuilder stringBuilder = data.stringBuilder;
-        for (long count = 0; count < data.loopSize; count++) {
-            stringBuilder.append(data.firstString);
-            stringBuilder.append(data.secondString);
-            stringBuilder.append(data.thirdString);
+        for (String str : data.stringArray) {
+            stringBuilder.append(str);
         }
         blackhole.consume(stringBuilder.toString());
     }
@@ -43,75 +41,72 @@ public class StringConcatenation {
     @Benchmark
     public void stringBuffer(Data data, Blackhole blackhole) {
         StringBuffer stringBuffer = data.stringBuffer;
-        stringBuffer.append(data.firstString);
-        stringBuffer.append(data.secondString);
-        stringBuffer.append(data.thirdString);
+        for (String str : data.stringArray) {
+            stringBuffer.append(str);
+        }
         blackhole.consume(stringBuffer.toString());
     }
 
 
     @Benchmark
-    public void stringBufferLoop(Data data, Blackhole blackhole) {
-        StringBuffer stringBuffer = data.stringBuffer;
-        for (long count = 0; count < data.loopSize; count++) {
-            stringBuffer.append(data.firstString);
-            stringBuffer.append(data.secondString);
-            stringBuffer.append(data.thirdString);
+    public void stringJoiner(Data data, Blackhole blackhole) {
+        StringJoiner stringJoiner = data.stringJoiner;
+        for (String str : data.stringArray) {
+            stringJoiner.add(str);
         }
-        blackhole.consume(stringBuffer.toString());
+        blackhole.consume(stringJoiner.toString());
     }
 
 
     @Benchmark
     public void stringPlus(Data data, Blackhole blackhole) {
-        blackhole.consume(data.firstString + data.secondString + data.thirdString);
-    }
-
-
-    @Benchmark
-    public void stringPlusLoop(Data data, Blackhole blackhole) {
-        for (long count = 0; count < data.loopSize; count++) {
-            blackhole.consume(data.firstString + data.secondString + data.thirdString);
+        String string = data.emptyString;
+        for (String str : data.stringArray) {
+            string = string + str;
         }
+        blackhole.consume(string);
     }
 
 
     @Benchmark
     public void stringConcat(Data data, Blackhole blackhole) {
-        blackhole.consume(data.firstString.concat(data.secondString).concat(data.thirdString));
-    }
-
-
-    @Benchmark
-    public void stringConcatLoop(Data data, Blackhole blackhole) {
-        for (long count = 0; count < data.loopSize; count++) {
-            blackhole.consume(data.firstString.concat(data.secondString).concat(data.thirdString));
+        String string = data.emptyString;
+        for (String str : data.stringArray) {
+            string = string.concat(str);
         }
+        blackhole.consume(string);
     }
 
 
     @State(Scope.Thread)
     public static class Data {
 
-        long loopSize = 1;
-        @Param({"25"})
+        @Param({"15"})
         int stringLength;
+        @Param({"5", "10", "25"})
+        int stringCount;
 
+        String[] stringArray;
         StringBuilder stringBuilder;
         StringBuffer stringBuffer;
-        String firstString;
-        String secondString;
-        String thirdString;
+        StringJoiner stringJoiner;
+        String formatArg;
+        String emptyString;
 
         @Setup
         public void setup() {
-            firstString = StringGenerator.generate(stringLength);
-            secondString = StringGenerator.generate(stringLength);
-            thirdString = StringGenerator.generate(stringLength);
+            stringArray = Stream.generate(() -> StringGenerator.generate(stringLength))
+                    .limit(stringCount)
+                    .toArray(String[]::new);
+
+            formatArg = StringRepeater.repeat("%s", stringCount);
 
             stringBuilder = new StringBuilder();
             stringBuffer = new StringBuffer();
+            stringJoiner = new StringJoiner("");
+            emptyString = "";
         }
+
     }
 
 }
