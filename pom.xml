@@ -10,16 +10,17 @@
     <packaging>jar</packaging>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <mainClass>com.fedorizvekov.jmh.tests.BenchmarkRunner</mainClass>
 
-        <jmh.version>1.26</jmh.version>
-        <junit.jupiter.version>5.7.0</junit.jupiter.version>
-        <mockito.jupiter.version>3.5.13</mockito.jupiter.version>
-        <assertj-core.version>3.17.2</assertj-core.version>
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <jmh.version>1.36</jmh.version>
+        <junit.jupiter.version>5.9.2</junit.jupiter.version>
+        <mockito.jupiter.version>5.4.0</mockito.jupiter.version>
+        <assertj-core.version>3.24.2</assertj-core.version>
+        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
     </properties>
 
     <dependencies>
@@ -43,12 +44,6 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
-            <version>${mockito.jupiter.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-inline</artifactId>
             <version>${mockito.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
