@@ -44,3 +44,51 @@ StringConcatenation.stringJoiner              25              15  avgt   20  455
 StringConcatenation.stringPlus                 5              15  avgt   20       90.937 ±       0.995  ns/op
 StringConcatenation.stringPlus                10              15  avgt   20      179.885 ±       1.527  ns/op
 StringConcatenation.stringPlus                25              15  avgt   20      609.623 ±       7.707
+
+
+## JDK 17.0.6
+
+Benchmark                          (stringCount)  (stringLength)  Mode  Cnt        Score         Error  Units
+StringConcatenation.stringBuffer               5              15  avgt   20  1054616.290 ±  294339.750  ns/op
+StringConcatenation.stringBuffer              10              15  avgt   20  1528225.335 ±  389187.475  ns/op
+StringConcatenation.stringBuffer              25              15  avgt   20  2434772.630 ±  580369.266  ns/op
+StringConcatenation.stringBuilder              5              15  avgt   20  1062743.378 ±  299379.574  ns/op
+StringConcatenation.stringBuilder             10              15  avgt   20  1529500.904 ±  387642.285  ns/op
+StringConcatenation.stringBuilder             25              15  avgt   20  2430015.608 ±  578023.095  ns/op
+StringConcatenation.stringConcat               5              15  avgt   20       80.799 ±       0.789  ns/op
+StringConcatenation.stringConcat              10              15  avgt   20      184.414 ±       2.220  ns/op
+StringConcatenation.stringConcat              25              15  avgt   20      614.078 ±       5.430  ns/op
+StringConcatenation.stringFormat               5              15  avgt   20      270.741 ±       1.872  ns/op
+StringConcatenation.stringFormat              10              15  avgt   20      497.868 ±       4.251  ns/op
+StringConcatenation.stringFormat              25              15  avgt   20     1234.592 ±      23.464  ns/op
+StringConcatenation.stringJoiner               5              15  avgt   20  2280971.959 ±  552433.000  ns/op
+StringConcatenation.stringJoiner              10              15  avgt   20  3194597.951 ±  771424.308  ns/op
+StringConcatenation.stringJoiner              25              15  avgt   20  5059019.742 ± 1245558.176  ns/op
+StringConcatenation.stringPlus                 5              15  avgt   20       77.358 ±       0.671  ns/op
+StringConcatenation.stringPlus                10              15  avgt   20      168.432 ±       2.487  ns/op
+StringConcatenation.stringPlus                25              15  avgt   20      583.721 ±       8.772  ns/op
+
+
+# Apple M1 Pro
+
+## JDK 17.0.6 arm
+
+Benchmark                          (stringCount)  (stringLength)  Mode  Cnt        Score        Error  Units
+StringConcatenation.stringBuffer               5              15  avgt   20   566315.678 ± 148143.670  ns/op
+StringConcatenation.stringBuffer              10              15  avgt   20   760124.795 ± 153287.284  ns/op
+StringConcatenation.stringBuffer              25              15  avgt   20  1034002.580 ± 180377.047  ns/op
+StringConcatenation.stringBuilder              5              15  avgt   20   569143.093 ± 148588.641  ns/op
+StringConcatenation.stringBuilder             10              15  avgt   20   760585.480 ± 153925.336  ns/op
+StringConcatenation.stringBuilder             25              15  avgt   20  1034631.732 ± 178237.807  ns/op
+StringConcatenation.stringConcat               5              15  avgt   20       45.157 ±      0.130  ns/op
+StringConcatenation.stringConcat              10              15  avgt   20      105.931 ±      0.237  ns/op
+StringConcatenation.stringConcat              25              15  avgt   20      350.493 ±      1.638  ns/op
+StringConcatenation.stringFormat               5              15  avgt   20      116.425 ±      3.166  ns/op
+StringConcatenation.stringFormat              10              15  avgt   20      205.921 ±      0.170  ns/op
+StringConcatenation.stringFormat              25              15  avgt   20      516.395 ±      3.424  ns/op
+StringConcatenation.stringJoiner               5              15  avgt   20  1590169.981 ± 368939.183  ns/op
+StringConcatenation.stringJoiner              10              15  avgt   20  2230513.163 ± 529438.973  ns/op
+StringConcatenation.stringJoiner              25              15  avgt   20  3692373.921 ± 882606.562  ns/op
+StringConcatenation.stringPlus                 5              15  avgt   20       58.030 ±      0.132  ns/op
+StringConcatenation.stringPlus                10              15  avgt   20      113.409 ±      1.061  ns/op
+StringConcatenation.stringPlus                25              15  avgt   20      327.947 ±      0.693  ns/op

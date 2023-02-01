@@ -23,3 +23,6 @@ java -jar ./target/jmh-tests-1.0.0-SNAPSHOT.jar
 #### [Intel i7-10510U CPU @ 1.80GHz](results/StringConcatenation.md#intel-i7-10510u-cpu--180ghz)
 * [JDK 1.8.0_192](results/StringConcatenation.md#jdk-180192)
 * [JDK 11.0.18](results/StringConcatenation.md#jdk-11018)
+* [JDK 17.0.6](results/StringConcatenation.md#jdk-1706)
+#### [Apple M1 Pro](results/StringConcatenation.md#apple-m1-pro)
+* [JDK 17.0.6](results/StringConcatenation.md#jdk-1706-arm)
